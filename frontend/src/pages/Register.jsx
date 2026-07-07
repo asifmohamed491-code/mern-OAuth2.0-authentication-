@@ -44,6 +44,7 @@ const Register = () => {
 
   const handleGoogleRegister = () => {
     console.log("Google Register Clicked");
+    window.location.href = "http://localhost:5000/api/auth/google";
   };
 
   return (
