@@ -6,30 +6,48 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true,  //to avoid this spacing problem to store "   Asif   " to remove space extra unwanted spaces
     },
     email: {
         type: String,
         required: true,
         unique: true,
+        lowercase: true
     },
     password: {
         type: String,
-        required: true,
+        default: null,
     },
+    googleId: {   // every user to provide unique key by google
+        type: String,
+        default: null,
+    },
+    avatar: {
+        type: String,
+        default: "", //profile photo by google account
+    },
+    provider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local",
+    },
+
 }, { timestamps: true });
 
-// Pre-Save
-// this - current user document
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password"))
-    return;
-    this.password = await bcrypt.hash(this.password, 10)
-})
+// Hash password only if it exists
+userSchema.pre("save", async function () {
+    if (!this.password || !this.isModified("password")) {
+        return;
+    }
 
-userSchema.methods.matchPassword = async function(enteredPassword){
-    return await bcrypt.compare(enteredPassword,this.password); 
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    if (!this.password) return false;
+    return await bcrypt.compare(enteredPassword, this.password);
 }
 
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
