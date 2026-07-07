@@ -18,13 +18,22 @@ const Home = ({ user, error }) => {
         {user ? (
           <>
             {/* Avatar */}
-
-            <div className="w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center text-4xl font-bold mx-auto mb-6">
-              {user.username?.charAt(0).toUpperCase()}
+            <div className="flex justify-center mb-6">
+              {user.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt={user.username}
+                  className="w-28 h-28 rounded-full object-cover border-4 border-blue-500 shadow-lg"
+                />
+              ) : (
+                <div className="w-28 h-28 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center text-white text-5xl font-bold shadow-lg">
+                  {user.username.charAt(0).toUpperCase()}
+                </div>
+              )}
             </div>
 
             <h1 className="text-3xl font-bold text-gray-800 ">
-              Welcome, {user.username} 
+              Welcome, {user.username}
             </h1>
 
             <p className="text-gray-500 mt-2">

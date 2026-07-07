@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar"
 import axios from './utils/axios';
 import Notfound from './components/Notfound';
+import OAuthSuccess from "./pages/OAuthSuccess";
 
 
 function App() {
@@ -15,31 +16,31 @@ function App() {
   console.log(user);
 
   useEffect(() => {
-  const fetchUser = async () => {
-    const token = localStorage.getItem("accessToken");
+    const fetchUser = async () => {
+      const token = localStorage.getItem("accessToken");
 
-    // 🔥 IMPORTANT CHECK
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
+      // 🔥 IMPORTANT CHECK
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
 
-    try {
-      const res = await axios.get("/api/users/me");
-      setUser(res.data);
-    } catch (err) {
-      console.log("❌ USER FETCH FAILED");
+      try {
+        const res = await axios.get("/api/users/me");
+        setUser(res.data);
+      } catch (err) {
+        console.log("❌ USER FETCH FAILED");
 
-      localStorage.removeItem("accessToken");
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        localStorage.removeItem("accessToken");
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  fetchUser();
-}, []);
-  
+    fetchUser();
+  }, []);
+
   if (isLoading) {
     return (
       <div className='min-h-screen bg-gray-900 flex items-center justify-center'>
@@ -63,6 +64,10 @@ function App() {
         <Route
           path="/register"
           element={user ? <Navigate to="/" /> : <Register />}
+        />
+        <Route
+          path="/oauth-success"
+          element={<OAuthSuccess  setUser={setUser}  />}
         />
         <Route path='*' element={<Notfound />} />
       </Routes>

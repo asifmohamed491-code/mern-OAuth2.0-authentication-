@@ -14,16 +14,46 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         // Check if user already exists
+        // Check Google ID
         let user = await User.findOne({
-          googleId: profile.id,  //googleId unique id ithu moolama thaan match pandrom namma
+          googleId: profile.id,
         });
 
+        // If Google ID not found, check email
+        if (!user) {
+
+          user = await User.findOne({
+            email: profile.emails[0].value,
+          });
+
+          // Email exists → Link Google account
+          if (user) {
+
+            user.googleId = profile.id;
+            user.avatar = profile.photos[0].value;
+            user.provider = "google";
+
+            await user.save();
+
+          } else {
+
+            // New Google User
+            user = await User.create({
+              username: profile.displayName,
+              email: profile.emails[0].value,
+              googleId: profile.id,
+              avatar: profile.photos[0].value,
+              provider: "google",
+            });
+
+          }
+        }
         // If not found, create a new user 
         if (!user) {
           user = await User.create({
             username: profile.displayName,
             email: profile.emails[0].value,
-            googleId: profile.id, 
+            googleId: profile.id,
             avatar: profile.photos[0].value,
             provider: "google",
           });

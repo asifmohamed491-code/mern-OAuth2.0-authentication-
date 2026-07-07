@@ -7,9 +7,13 @@ const Navbar = ({ user, setUser }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/users/logout", {}, {
-        withCredentials: true,
-      });
+      await axios.post(
+        "/api/users/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
 
       localStorage.removeItem("accessToken");
       setUser(null);
@@ -36,20 +40,28 @@ const Navbar = ({ user, setUser }) => {
 
           {user ? (
             <>
-              {/* User Avatar */}
+              {/* Profile */}
               <div className="flex items-center gap-3">
 
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold uppercase">
-                  {user?.name?.charAt(0) || user?.email?.charAt(0)}
-                </div>
+                {user.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.username}
+                    className="w-11 h-11 rounded-full object-cover border-2 border-blue-500 shadow"
+                  />
+                ) : (
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-lg uppercase">
+                    {user.username?.charAt(0)}
+                  </div>
+                )}
 
                 <div className="hidden sm:flex flex-col">
                   <span className="text-sm font-semibold text-gray-800">
-                    {user?.name || "User"}
+                    {user.username}
                   </span>
 
                   <span className="text-xs text-gray-500">
-                    {user?.email}
+                    {user.email}
                   </span>
                 </div>
 
@@ -57,7 +69,7 @@ const Navbar = ({ user, setUser }) => {
 
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition duration-300 shadow-md cursor-pointer"
+                className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow-md cursor-pointer"
               >
                 Logout
               </button>
@@ -73,7 +85,7 @@ const Navbar = ({ user, setUser }) => {
 
               <Link
                 to="/register"
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-xl font-medium hover:scale-105 transition duration-300 shadow-md"
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2 rounded-xl font-medium hover:scale-105 transition shadow-md"
               >
                 Register
               </Link>

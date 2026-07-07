@@ -1,85 +1,124 @@
-# 🔐 MERN Auth App
+# 🔐 MERN OAuth2.0 Authentication
 
-A full-stack authentication application built using the MERN stack (MongoDB, Express, React, Node.js).
-Users can register, login, and access protected routes using JWT authentication.
+A complete authentication system built with the **MERN Stack** featuring traditional JWT authentication and Google OAuth 2.0 login using Passport.js.
 
 ---
 
 ## 🚀 Features
 
-* 🔑 User Registration & Login
-* 🔐 JWT Authentication
-* 👤 Protected Routes
-* 💾 Token stored in localStorage
-* 🎨 Responsive UI with Tailwind CSS
+### 🔑 JWT Authentication
+
+- User Registration
+- User Login
+- Password Hashing using bcryptjs
+- JWT Access Token Authentication
+- Refresh Token using HttpOnly Cookies
+- Secure Protected Routes
+- Logout Functionality
+
+---
+
+### 🌐 Google OAuth 2.0
+
+- Sign in with Google
+- Automatic Account Creation for New Google Users
+- Existing User Login
+- Google Profile Picture Support
+- Google Account Information Retrieval
+- Passport.js Authentication
+
+---
+
+### 👤 User Profile
+
+- Display Username
+- Display Email
+- Google Profile Avatar
+- Authentication Status
+- Responsive User Dashboard
+
+---
+
+### 🎨 Responsive UI
+
+- Modern Login Page
+- Modern Register Page
+- Responsive Navbar
+- Home Dashboard
+- Custom 404 Page
+- Mobile Friendly Design
+- Tailwind CSS Styling
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** React, Tailwind CSS
-* **Backend:** Node.js, Express.js
-* **Database:** MongoDB
-* **Authentication:** JWT (JSON Web Token)
+### Frontend
+
+- React.js
+- React Router DOM
+- Axios
+- Tailwind CSS
+- React Icons
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- Passport.js
+- Passport Google OAuth20
+- JWT
+- bcryptjs
+- Cookie Parser
+- Express Session
+- CORS
+- dotenv
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```
-mern-auth-jwt/
-├── backend/
-│   ├── config/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   └── server.js
+nodejs-OAuth2.0
 │
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   └── App.jsx
-│   └── vite.config.js
+├── backend
+│   ├── config
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── server.js
+│   └── .env
+│
+└── frontend
+    ├── src
+    │   ├── components
+    │   ├── pages
+    │   ├── utils
+    │   └── App.jsx
+    └── package.json
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## ⚙️ Installation
 
-### 1️⃣ Clone the repository
+### Clone Repository
 
 ```bash
-git clone https://github.com/your-username/mern-auth-jwt.git
-cd mern-auth-jwt
+git clone https://github.com/yourusername/mern-oauth2-authentication.git
 ```
 
----
-
-### 2️⃣ Backend Setup
+### Backend
 
 ```bash
 cd backend
 npm install
-```
-
-Create a `.env` file inside backend:
-
-```
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-```
-
-Run backend server:
-
-```bash
 npm run dev
 ```
 
----
-
-### 3️⃣ Frontend Setup
+### Frontend
 
 ```bash
 cd frontend
@@ -89,55 +128,108 @@ npm run dev
 
 ---
 
-## 🔗 API Endpoints
+## 🔑 Environment Variables
 
-| Method | Route               | Description      |
-| ------ | ------------------- | ---------------- |
-| POST   | /api/users/register | Register user    |
-| POST   | /api/users/login    | Login user       |
-| GET    | /api/users/me       | Get current user |
+Create a `.env` file inside the backend folder.
+
+```env
+PORT=5000
+
+MONGO_URI=YOUR_MONGODB_URI
+
+JWT_SECRET=YOUR_JWT_SECRET
+
+REFRESH_SECRET=YOUR_REFRESH_SECRET
+
+GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+
+GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+
+GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+```
 
 ---
 
 ## 🔐 Authentication Flow
 
-1. User logs in
-2. Server returns JWT token
-3. Token stored in localStorage
-4. Token sent in Authorization header for protected routes
+### Email Authentication
+
+```
+Register
+      ↓
+Password Hashing
+      ↓
+MongoDB
+      ↓
+Login
+      ↓
+JWT Access Token
+      ↓
+Protected Routes
+```
+
+---
+
+### Google OAuth Flow
+
+```
+Continue with Google
+          ↓
+Google Authentication
+          ↓
+Passport.js
+          ↓
+Check Existing User
+          ↓
+New User → Create Account
+Existing User → Login
+          ↓
+Generate JWT
+          ↓
+Redirect to Frontend
+          ↓
+Authenticated Dashboard
+```
 
 ---
 
 ## 📸 Screenshots
 
-### Login Page
-<img width="1899" height="978" alt="image" src="https://github.com/user-attachments/assets/043234aa-ebc1-497f-a9d7-3ac44dad424e" />
+- Login Page
+- Register Page
+- Google OAuth Login
+- User Dashboard
+- Responsive Navbar
 
-
-
-
-### Register Page
-
-<img width="1500" height="600" alt="image" src="https://github.com/user-attachments/assets/04544ff8-b1ef-4fae-873f-7ad95605d398" />
-
+(Add your screenshots here)
 
 ---
 
-## 🧠 Learning Outcomes
+## 🔮 Future Improvements
 
-* Understanding JWT Authentication
-* Handling Protected Routes in React
-* Building REST APIs with Express
-* Managing state using React Hooks
+- Forgot Password
+- Email Verification
+- OTP Authentication
+- GitHub OAuth
+- Facebook Login
+- Role Based Authentication
+- User Profile Update
+- Dark Mode
+- Multi Device Login
+- Account Settings
 
 ---
 
-## 🙌 Author
+## 👨‍💻 Author
 
-**Asif**
+**Mohamed Asif**
+
+GitHub: https://github.com/asifmohamed491-code
+
+LinkedIn: https://www.linkedin.com/
 
 ---
 
 ## ⭐ Support
 
-If you like this project, give it a ⭐ on GitHub!
+If you like this project, give it a ⭐ on GitHub.
